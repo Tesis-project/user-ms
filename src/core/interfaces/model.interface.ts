@@ -53,6 +53,7 @@ export interface User_I extends SchemaKey_I{
     auth?: Auth_I;
     profile?: User_Profile_I;
     hiring_data?: User_HiringData_I;
+    updated_at: Date;
 }
 
  export interface User_Profile_I extends SchemaKey_I {

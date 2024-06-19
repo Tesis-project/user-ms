@@ -1,24 +1,8 @@
 
-/*  Table User {
-  _id varchar [pk]
-  name varchar
-  last_name varchar
-  gender varchar
-  phone varchar
-  address varchar
-  city varchar
-  state varchar
-  auth varchar
-  profile varchar
-  hiring_data varchar
-  updated_at timestamp
-}
- */
-
 import { Entity, Enum, Property } from "@mikro-orm/core";
-import { Schema_key } from "../../core/entities_global";
-import { TempoHandler } from "../../core/classes";
-import { User_I } from "../../core/interfaces/model.interface";
+import { Schema_key } from "../../../core/entities_global";
+import { User_I } from "../../../core/interfaces/model.interface";
+import { TempoHandler } from "../../../core/classes";
 
 export enum Gender_Enum {
     MALE = "MALE",
@@ -30,7 +14,7 @@ export enum Gender_Enum {
     tableName: 'user',
     collection: 'user'
 })
-export class User extends Schema_key {
+export class User_Ety extends Schema_key {
 
     @Property({
         type: 'varchar'
@@ -46,7 +30,7 @@ export class User extends Schema_key {
     @Property({
         nullable: true
     })
-    gender?: string;
+    gender?: string = "NONE";
 
     @Property({
         type: 'varchar',
@@ -62,6 +46,7 @@ export class User extends Schema_key {
 
     @Property({
         type: 'varchar',
+        unique: true
     })
     auth: any;
 
