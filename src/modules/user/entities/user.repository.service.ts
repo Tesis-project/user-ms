@@ -6,6 +6,11 @@ import { Injectable } from '@nestjs/common';
 import { User_Ety } from './user.entity';
 import { EntityManager, EntityRepository } from '@mikro-orm/postgresql';
 
+import { Pagination_Dto } from '@tesis-project/dev-globals/dist/core/dto';
+
+import { Pagination_I, pagination_meta } from '@tesis-project/dev-globals/dist/core/helpers';
+
+
 @Injectable()
 export class User_RepositoryService extends EntityRepository<User_Ety> {
 
@@ -33,10 +38,36 @@ export class User_RepositoryService extends EntityRepository<User_Ety> {
 
     }
 
-    async find_all(em?: EntityManager): Promise<User_Ety[]> {
+    async find_all(em?: EntityManager, Pagination_Dto?: Pagination_Dto): Promise<Pagination_I<User_Ety>> {
+
         const _em = em ?? this.em;
-        return await _em.find(User_Ety, {});
+
+        if (!Pagination_Dto) {
+            return {
+                data: await _em.find(User_Ety, {}),
+                meta: null
+            };
+        }
+
+        const { page, limit } = Pagination_Dto;
+
+        const totalRecords = await _em.count(User_Ety, {});
+
+        // Obtener los datos paginados
+        const data = await _em.find(User_Ety, {}, {
+            limit,
+            offset: (page - 1) * limit,
+        });
+
+        const meta: Pagination_I['meta'] = pagination_meta(page, limit, totalRecords);
+
+        return {
+            data,
+            meta
+        }
+
     }
+
 
     async delete_user(user: Partial<User_Ety>, em?: EntityManager): Promise<boolean> {
         const _em = em ?? this.em;

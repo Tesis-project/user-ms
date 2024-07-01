@@ -1,8 +1,10 @@
 
 import { Entity, Enum, Property } from "@mikro-orm/core";
 import { Schema_key } from "../../../core/entities_global";
-import { User_I } from "../../../core/interfaces/model.interface";
-import { TempoHandler } from "../../../core/classes";
+
+import { User_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
+
+import { TempoHandler } from "@tesis-project/dev-globals/dist/classes"
 
 export enum Gender_Enum {
     MALE = "MALE",
@@ -60,3 +62,6 @@ export class User_Ety extends Schema_key {
     updated_at = new TempoHandler().date_now()
 
 }
+
+
+ 

@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from "@nestjs/common";
-import { _Response_I } from "../interfaces";
 import { RpcException } from "@nestjs/microservices";
+import { _Response_I } from "@tesis-project/dev-globals/dist/interfaces";
 
 
 
@@ -44,7 +44,7 @@ export class ExceptionsHandler {
             (typeof obj.ok === 'boolean' || obj.ok === undefined) &&
             (typeof obj.statusCode === 'number' || obj.statusCode === undefined) &&
             (typeof obj.path === 'string' || obj.path === undefined) &&
-            (obj.data !== undefined) && // You can add more specific checks for the data type if needed
+            (obj.data !== undefined) &&
             (typeof obj.message === 'string' || obj.message === undefined) &&
             (typeof obj.paginator === 'object' || obj.paginator === undefined) &&
             (typeof obj.err === 'object' || obj.err === undefined) &&
