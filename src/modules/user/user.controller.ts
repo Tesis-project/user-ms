@@ -2,8 +2,8 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UserService } from './user.service';
-import { CreateUser_Dto } from '@tesis-project/dev-globals/dist/modules/user/dto';
-import { UpdateUser_Dto } from '@tesis-project/dev-globals/dist/modules/user/dto';
+
+import { CreateUser_Dto, UpdateUser_Dto } from '@tesis-project/dev-globals/dist/modules/user/dto';
 
 import {
     Pagination_Dto

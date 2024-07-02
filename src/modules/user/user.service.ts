@@ -11,6 +11,9 @@ import { CreateUser_Dto, UpdateUser_Dto } from '@tesis-project/dev-globals/dist/
 import { Pagination_Dto } from '@tesis-project/dev-globals/dist/core/dto';
 
 import { _Response_I } from '@tesis-project/dev-globals/dist/core/interfaces';
+import { ProfileService_GW } from '../profile/profile.service';
+
+import * as uuid from 'uuid';
 
 @Injectable()
 export class UserService {
@@ -21,6 +24,7 @@ export class UserService {
 
     constructor(
         private readonly _User_RepositoryService: User_RepositoryService,
+        private readonly _ProfileService_GW: ProfileService_GW,
         private readonly em: EntityManager,
     ) {
 
@@ -68,8 +72,6 @@ export class UserService {
         let _Response: _Response_I;
 
         try {
-
-            console.log('_id', _id);
 
             const f_em = this.em.fork();
             const user = await this._User_RepositoryService.find_one({ _id }, f_em);
@@ -126,10 +128,19 @@ export class UserService {
                 throw new RpcException(_Response)
             }
 
-            const new_user = await this._User_RepositoryService.create_user({
+            let new_user = await this._User_RepositoryService.create_user({
                 name,
                 last_name,
-                auth
+                auth,
+                profile: uuid.v4()
+            }, f_em);
+
+            const new_profile = await this._ProfileService_GW.create_profile( {
+                user: new_user._id
+            } );
+
+            new_user = await this._User_RepositoryService.update_user(new_user, {
+                profile: new_profile.data._id
             }, f_em);
 
             _Response = {

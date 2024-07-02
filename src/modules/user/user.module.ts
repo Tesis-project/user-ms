@@ -6,6 +6,7 @@ import { User_Ety } from './entities/user.entity';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 
 import { User_RepositoryService } from './entities/user.repository.service';
+import { NatsModule } from '../../core/transports/nats.module';
 
 @Module({
     controllers: [UserController],
@@ -14,6 +15,7 @@ import { User_RepositoryService } from './entities/user.repository.service';
         MikroOrmModule.forFeature([
             User_Ety
         ]),
+        NatsModule
     ]
 })
 export class UserModule {  }

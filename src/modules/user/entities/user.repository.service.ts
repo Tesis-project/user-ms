@@ -53,7 +53,6 @@ export class User_RepositoryService extends EntityRepository<User_Ety> {
 
         const totalRecords = await _em.count(User_Ety, {});
 
-        // Obtener los datos paginados
         const data = await _em.find(User_Ety, {}, {
             limit,
             offset: (page - 1) * limit,
@@ -70,8 +69,8 @@ export class User_RepositoryService extends EntityRepository<User_Ety> {
 
 
     async delete_user(user: Partial<User_Ety>, em?: EntityManager): Promise<boolean> {
+
         const _em = em ?? this.em;
-        // const user = await _em.findOne(User_Ety, { id });
         const user_find = await this.find_one(user, _em);
 
         if (!user_find) {
@@ -80,6 +79,7 @@ export class User_RepositoryService extends EntityRepository<User_Ety> {
 
         await _em.removeAndFlush(user_find);
         return true;
+
     }
 
     async update_user(user: Partial<User_Ety>, updateData: Partial<User_Ety>, em?: EntityManager): Promise<User_Ety> {

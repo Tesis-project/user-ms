@@ -52,6 +52,12 @@ export class User_Ety extends Schema_key {
     })
     auth: any;
 
+    @Property({
+        type: 'varchar',
+        unique: true
+    })
+    profile: any;
+
     // profile: string;
     // hiring_data: string;
 
@@ -64,4 +70,3 @@ export class User_Ety extends Schema_key {
 }
 
 
- 

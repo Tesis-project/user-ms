@@ -76,6 +76,15 @@
           "nullable": false,
           "mappedType": "string"
         },
+        "profile": {
+          "name": "profile",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamptz",
@@ -84,7 +93,7 @@
           "primary": false,
           "nullable": false,
           "length": 6,
-          "default": "'2024-06-16 23:18:36'",
+          "default": "'2024-07-02 17:07:43'",
           "mappedType": "datetime"
         }
       },
@@ -97,6 +106,16 @@
           ],
           "composite": false,
           "keyName": "user_auth_unique",
+          "constraint": true,
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "profile"
+          ],
+          "composite": false,
+          "keyName": "user_profile_unique",
           "constraint": true,
           "primary": false,
           "unique": true
