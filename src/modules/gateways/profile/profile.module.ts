@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { ProfileService_GW } from './profile.service';
-import { NatsModule } from '../../core/transports/nats.module';
+import { NatsModule } from '../../../core/transports/nats.module';
 
 @Global()
 @Module({

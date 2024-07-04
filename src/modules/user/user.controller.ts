@@ -1,5 +1,5 @@
 
-import { Controller } from '@nestjs/common';
+import { Controller, ParseUUIDPipe } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UserService } from './user.service';
 
@@ -32,7 +32,7 @@ export class UserController {
     }
 
     @MessagePattern('user.get_one')
-    get_one(@Payload() _id: string) {
+    get_one(@Payload(ParseUUIDPipe) _id: string) {
 
         return this.userService.find_one(_id);
 
@@ -45,10 +45,5 @@ export class UserController {
 
     }
 
-
-    //   @MessagePattern('removeUser')
-    //   remove(@Payload() id: number) {
-    //     return this.userService.remove(id);
-    //   }
 
 }

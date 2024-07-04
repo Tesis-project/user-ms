@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { NATS_SERVICE } from '../../core/config/services';
 import { Create_Profile_Dto } from '@tesis-project/dev-globals/dist/modules/profile/dto';
-import { _Response_I, Profile_I } from '@tesis-project/dev-globals/dist/interfaces';
+import { _Response_I } from '@tesis-project/dev-globals/dist/core/interfaces';
+import { Profile_I } from '@tesis-project/dev-globals/dist/modules/profile/interfaces';
 import { firstValueFrom } from 'rxjs';
+import { NATS_SERVICE } from '../../../core/config/services';
 
 @Injectable()
 export class ProfileService_GW {

@@ -93,7 +93,7 @@
           "primary": false,
           "nullable": false,
           "length": 6,
-          "default": "'2024-07-02 17:07:43'",
+          "default": "'2024-07-03 16:46:19'",
           "mappedType": "datetime"
         }
       },
@@ -133,6 +133,357 @@
       ],
       "checks": [],
       "foreignKeys": {},
+      "nativeEnums": {}
+    },
+    {
+      "columns": {
+        "_id": {
+          "name": "_id",
+          "type": "uuid",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "mappedType": "uuid"
+        },
+        "user__id": {
+          "name": "user__id",
+          "type": "uuid",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "uuid"
+        }
+      },
+      "name": "user_hiring_data",
+      "schema": "public",
+      "indexes": [
+        {
+          "columnNames": [
+            "user__id"
+          ],
+          "composite": false,
+          "keyName": "user_hiring_data_user__id_unique",
+          "constraint": true,
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "user_hiring_data_pkey",
+          "columnNames": [
+            "_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "user_hiring_data_user__id_foreign": {
+          "constraintName": "user_hiring_data_user__id_foreign",
+          "columnNames": [
+            "user__id"
+          ],
+          "localTableName": "public.user_hiring_data",
+          "referencedColumnNames": [
+            "_id"
+          ],
+          "referencedTableName": "public.user",
+          "deleteRule": "cascade",
+          "updateRule": "cascade"
+        }
+      },
+      "nativeEnums": {}
+    },
+    {
+      "columns": {
+        "_id": {
+          "name": "_id",
+          "type": "uuid",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "mappedType": "uuid"
+        },
+        "address": {
+          "name": "address",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "default": "''",
+          "mappedType": "string"
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "default": "''",
+          "mappedType": "string"
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "default": "''",
+          "mappedType": "string"
+        },
+        "postal_code": {
+          "name": "postal_code",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "default": "''",
+          "mappedType": "string"
+        },
+        "rif": {
+          "name": "rif",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "default": "''",
+          "mappedType": "string"
+        },
+        "social_reason": {
+          "name": "social_reason",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "default": "''",
+          "mappedType": "string"
+        },
+        "state": {
+          "name": "state",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "default": "''",
+          "mappedType": "string"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "default": "'2024-07-03 16:46:19'",
+          "mappedType": "datetime"
+        },
+        "hiring_data__id": {
+          "name": "hiring_data__id",
+          "type": "uuid",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "uuid"
+        }
+      },
+      "name": "user_personal_data",
+      "schema": "public",
+      "indexes": [
+        {
+          "columnNames": [
+            "hiring_data__id"
+          ],
+          "composite": false,
+          "keyName": "user_personal_data_hiring_data__id_unique",
+          "constraint": true,
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "user_personal_data_pkey",
+          "columnNames": [
+            "_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "user_personal_data_hiring_data__id_foreign": {
+          "constraintName": "user_personal_data_hiring_data__id_foreign",
+          "columnNames": [
+            "hiring_data__id"
+          ],
+          "localTableName": "public.user_personal_data",
+          "referencedColumnNames": [
+            "_id"
+          ],
+          "referencedTableName": "public.user_hiring_data",
+          "deleteRule": "cascade",
+          "updateRule": "cascade"
+        }
+      },
+      "nativeEnums": {}
+    },
+    {
+      "columns": {
+        "_id": {
+          "name": "_id",
+          "type": "uuid",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "mappedType": "uuid"
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "enumItems": [
+            "BANK_ACCOUNT",
+            "MOBILE_PAYMENT"
+          ],
+          "mappedType": "enum"
+        },
+        "bank_name": {
+          "name": "bank_name",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "enumItems": [
+            "BC_BICENTENARIO",
+            "BC_BANESCO",
+            "BC_TESORO",
+            "BC_PROVINCIAL",
+            "BC_MERCANTIL",
+            "BC_VENEZUELA"
+          ],
+          "mappedType": "enum"
+        },
+        "number": {
+          "name": "number",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "titular": {
+          "name": "titular",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "person_id": {
+          "name": "person_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "default": "'2024-07-03 16:46:19'",
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "default": "'2024-07-03 16:46:19'",
+          "mappedType": "datetime"
+        },
+        "hiring_data__id": {
+          "name": "hiring_data__id",
+          "type": "uuid",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "uuid"
+        }
+      },
+      "name": "user_bank_data",
+      "schema": "public",
+      "indexes": [
+        {
+          "keyName": "user_bank_data_pkey",
+          "columnNames": [
+            "_id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "user_bank_data_hiring_data__id_foreign": {
+          "constraintName": "user_bank_data_hiring_data__id_foreign",
+          "columnNames": [
+            "hiring_data__id"
+          ],
+          "localTableName": "public.user_bank_data",
+          "referencedColumnNames": [
+            "_id"
+          ],
+          "referencedTableName": "public.user_hiring_data",
+          "deleteRule": "cascade",
+          "updateRule": "cascade"
+        }
+      },
       "nativeEnums": {}
     }
   ],

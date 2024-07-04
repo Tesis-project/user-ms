@@ -1,18 +1,15 @@
-/*
-https://docs.nestjs.com/providers#services
-*/
-
 import { Injectable } from '@nestjs/common';
 import { User_Ety } from './user.entity';
-import { EntityManager, EntityRepository } from '@mikro-orm/postgresql';
+import { EntityManager, EntityRepository, FilterQuery } from '@mikro-orm/postgresql';
 
 import { Pagination_Dto } from '@tesis-project/dev-globals/dist/core/dto';
 
 import { Pagination_I, pagination_meta } from '@tesis-project/dev-globals/dist/core/helpers';
+import { _Find_Many_I, _Find_One_I, _Process_Delete_I, _Process_Save_I, _Process_Update_I } from '@tesis-project/dev-globals/dist/core/interfaces';
 
 
 @Injectable()
-export class User_RepositoryService extends EntityRepository<User_Ety> {
+export class User_Repository extends EntityRepository<User_Ety> {
 
 
     constructor(
@@ -21,39 +18,35 @@ export class User_RepositoryService extends EntityRepository<User_Ety> {
         super(em, User_Ety);
     }
 
+    async create_user({ save, _em }: _Process_Save_I<User_Ety>): Promise<User_Ety> {
 
-    async create_user(user: Partial<User_Ety>, em?: EntityManager): Promise<User_Ety> {
-
-        const _em = em ?? this.em;
-        const new_user = await _em.create(User_Ety, user);
+        const new_user = await _em.create(User_Ety, save);
         await _em.persistAndFlush(new_user);
         return new_user;
 
     }
 
-    async find_one(user: Partial<User_Ety>, em?: EntityManager): Promise<User_Ety> {
+    async find_one({ find, options, _em}: _Find_One_I<User_Ety, 'User_Ety'>): Promise<User_Ety> {
 
-        const _em = em ?? this.em;
-        return await _em.findOne(User_Ety, user);
+        return await _em.findOne(User_Ety, find);
 
     }
 
-    async find_all(em?: EntityManager, Pagination_Dto?: Pagination_Dto): Promise<Pagination_I<User_Ety>> {
-
-        const _em = em ?? this.em;
+    async find_all({ find, options, _em }: _Find_Many_I<User_Ety, 'User_Ety'>, Pagination_Dto?: Pagination_Dto): Promise<Pagination_I<User_Ety>> {
 
         if (!Pagination_Dto) {
             return {
-                data: await _em.find(User_Ety, {}),
+                data: await _em.find(User_Ety, find, options),
                 meta: null
             };
         }
 
         const { page, limit } = Pagination_Dto;
 
-        const totalRecords = await _em.count(User_Ety, {});
+        const totalRecords = await _em.count(User_Ety, find);
 
-        const data = await _em.find(User_Ety, {}, {
+        const data = await _em.find(User_Ety, find, {
+            ...options,
             limit,
             offset: (page - 1) * limit,
         });
@@ -67,11 +60,9 @@ export class User_RepositoryService extends EntityRepository<User_Ety> {
 
     }
 
+    async delete_user({ find, _em }: _Process_Delete_I<User_Ety>): Promise<boolean> {
 
-    async delete_user(user: Partial<User_Ety>, em?: EntityManager): Promise<boolean> {
-
-        const _em = em ?? this.em;
-        const user_find = await this.find_one(user, _em);
+        const user_find = await this.find_one({ find, _em });
 
         if (!user_find) {
             throw new Error('User not found');
@@ -82,17 +73,16 @@ export class User_RepositoryService extends EntityRepository<User_Ety> {
 
     }
 
-    async update_user(user: Partial<User_Ety>, updateData: Partial<User_Ety>, em?: EntityManager): Promise<User_Ety> {
+    async update_user({ find, update, _em }: _Process_Update_I<User_Ety>): Promise<User_Ety> {
 
-        const _em = em ?? this.em;
 
-        const user_find = await this.find_one(user, _em);
+        const user_find = await this.find_one({find, _em});
 
         if (!user_find) {
             throw new Error('User not found');
         }
 
-        Object.assign(user_find, updateData);
+        Object.assign(user_find, update);
         await _em.persistAndFlush(user_find);
         return user_find;
 

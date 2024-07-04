@@ -1,22 +1,22 @@
 
-import { Entity, Enum, Property } from "@mikro-orm/core";
+import { Cascade, Entity, EntityRepositoryType, Enum, OneToOne, Property } from "@mikro-orm/core";
 import { Schema_key } from "../../../core/entities_global";
 
-import { User_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
+import { Gender_Enum, User_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
 
-import { TempoHandler } from "@tesis-project/dev-globals/dist/classes"
+import { Hiring_Data_Ety } from "../../personal/entities";
+import { User_Repository } from "./user.repository.service";
+import { TempoHandler } from '@tesis-project/dev-globals/dist/core/classes';
 
-export enum Gender_Enum {
-    MALE = "MALE",
-    FEMALE = "FEMALE",
-    NONE = "NONE",
-}
 
 @Entity({
     tableName: 'user',
-    collection: 'user'
+    collection: 'user',
+    repository: () => User_Repository
 })
 export class User_Ety extends Schema_key {
+
+    [EntityRepositoryType]?: User_Repository;
 
     @Property({
         type: 'varchar'
@@ -58,8 +58,9 @@ export class User_Ety extends Schema_key {
     })
     profile: any;
 
-    // profile: string;
-    // hiring_data: string;
+    // @OneToOne(() => Hiring_Data_Ety, { inversedBy: 'user', orphanRemoval: true })
+    @OneToOne(() => Hiring_Data_Ety, hiring => hiring.user, { mappedBy: 'user', orphanRemoval: true })
+    hiring_data: Hiring_Data_Ety;
 
     @Property({
         type: 'timestamp',
@@ -68,5 +69,4 @@ export class User_Ety extends Schema_key {
     updated_at = new TempoHandler().date_now()
 
 }
-
 
