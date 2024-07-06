@@ -15,28 +15,23 @@ export class User_Repository extends EntityRepository<User_Ety> {
     constructor(
         em: EntityManager,
     ) {
-        super(em, User_Ety);
+        super(em.fork(), User_Ety);
     }
 
     async create_user({ save, _em }: _Process_Save_I<User_Ety>): Promise<User_Ety> {
 
         const new_user = await _em.create(User_Ety, save);
-        await _em.persistAndFlush(new_user);
+        await _em.persist(new_user);
         return new_user;
 
     }
 
-    async find_one({ find, options, _em}: _Find_One_I<User_Ety, 'User_Ety'>): Promise<User_Ety> {
-
-        return await _em.findOne(User_Ety, find);
-
-    }
 
     async find_all({ find, options, _em }: _Find_Many_I<User_Ety, 'User_Ety'>, Pagination_Dto?: Pagination_Dto): Promise<Pagination_I<User_Ety>> {
 
         if (!Pagination_Dto) {
             return {
-                data: await _em.find(User_Ety, find, options),
+                data: await this.find( find, options ),
                 meta: null
             };
         }
@@ -62,28 +57,27 @@ export class User_Repository extends EntityRepository<User_Ety> {
 
     async delete_user({ find, _em }: _Process_Delete_I<User_Ety>): Promise<boolean> {
 
-        const user_find = await this.find_one({ find, _em });
+        const user_find = await this.findOne( find );
 
         if (!user_find) {
             throw new Error('User not found');
         }
 
-        await _em.removeAndFlush(user_find);
+        await _em.remove(user_find);
         return true;
 
     }
 
     async update_user({ find, update, _em }: _Process_Update_I<User_Ety>): Promise<User_Ety> {
 
-
-        const user_find = await this.find_one({find, _em});
+        const user_find = await this.findOne(find );
 
         if (!user_find) {
             throw new Error('User not found');
         }
 
         Object.assign(user_find, update);
-        await _em.persistAndFlush(user_find);
+        await _em.persist(user_find);
         return user_find;
 
     }

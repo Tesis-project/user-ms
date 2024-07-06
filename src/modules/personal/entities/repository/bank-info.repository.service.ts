@@ -4,30 +4,34 @@ import { Pagination_I, pagination_meta } from "@tesis-project/dev-globals/dist/c
 
 import { Pagination_Dto } from '@tesis-project/dev-globals/dist/core/dto';
 import { Bank_Data_Ety } from "..";
+import { _Find_One_I, _Process_Delete_I, _Process_Save_I, _Process_Update_I } from '@tesis-project/dev-globals/dist/core/interfaces';
+import { MikroORM } from "@mikro-orm/postgresql";
 
 
 @Injectable()
 export class Bank_Info_Repository extends EntityRepository<Bank_Data_Ety> {
 
-
     constructor(
         em: EntityManager,
+        private readonly orm: MikroORM
+
     ) {
-        super(em, Bank_Data_Ety);
+        // super(em, Bank_Data_Ety);
+        super(em.fork(), Bank_Data_Ety);
+
     }
 
+    async create_bank_info({ save, _em }: _Process_Save_I<Bank_Data_Ety>): Promise<Bank_Data_Ety> {
 
-    async create_bank_info(bank_info: Partial<Bank_Data_Ety>, _em?: EntityManager): Promise<Bank_Data_Ety> {
-
-        const new_bank_info = await _em.create(Bank_Data_Ety, bank_info);
-        await _em.persistAndFlush(new_bank_info);
+        const new_bank_info = await _em.create(Bank_Data_Ety, save);
+        await _em.persist(new_bank_info);
         return new_bank_info;
 
     }
 
-    async find_one(bank_info: FilterQuery<Bank_Data_Ety>, _em?: EntityManager): Promise<Bank_Data_Ety> {
+    async find_one({ find, _em }: _Find_One_I<Bank_Data_Ety, 'Bank_Data_Ety'>): Promise<Bank_Data_Ety> {
 
-        return await _em.findOne(Bank_Data_Ety, bank_info);
+        return await _em.findOne(Bank_Data_Ety, find);
 
     }
 
@@ -59,31 +63,29 @@ export class Bank_Info_Repository extends EntityRepository<Bank_Data_Ety> {
 
     }
 
+    async delete_bank_info({ find,  _em}: _Process_Delete_I<Bank_Data_Ety>): Promise<boolean> {
 
-    async delete_bank_info(bank_info: Partial<Bank_Data_Ety>, _em?: EntityManager): Promise<boolean> {
-
-        const bank_info_find = await this.find_one(bank_info, _em);
+        const bank_info_find = await this.find_one({ find, _em });
 
         if (!bank_info_find) {
             throw new Error('bank_info not found');
         }
 
-        await _em.removeAndFlush(bank_info_find);
+        await _em.remove(bank_info_find);
         return true;
 
     }
 
-    async update_bank_info(bank_info: Partial<Bank_Data_Ety>, updateData: Partial<Bank_Data_Ety>, _em?: EntityManager): Promise<Bank_Data_Ety> {
+    async update_bank_info({ find, update, _em}: _Process_Update_I<Bank_Data_Ety>): Promise<Bank_Data_Ety> {
 
-
-        const bank_info_find = await this.find_one(bank_info, _em);
+        const bank_info_find = await this.find_one({ find, _em});
 
         if (!bank_info_find) {
             throw new Error('bank_info not found');
         }
 
-        Object.assign(bank_info_find, updateData);
-        await _em.persistAndFlush(bank_info_find);
+        Object.assign(bank_info_find, update);
+        await _em.persist(bank_info_find);
         return bank_info_find;
 
     }

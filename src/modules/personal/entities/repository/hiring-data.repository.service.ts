@@ -14,18 +14,12 @@ export class Hiring_Data_Repository extends EntityRepository<Hiring_Data_Ety> {
     constructor(
         em: EntityManager,
     ) {
-        super(em, Hiring_Data_Ety);
-    }
-
-    async find_one({ find, options, _em }: _Find_One_I<Hiring_Data_Ety, 'Hiring_Data_Ety'>): Promise<Hiring_Data_Ety> {
-
-        return await _em.findOne(Hiring_Data_Ety, find, options);
-
+        super(em.fork(), Hiring_Data_Ety);
     }
 
     async update_hiring_data({ find, update, _em }: _Process_Update_I): Promise<Hiring_Data_Ety> {
 
-        const hiring_data_find = await this.find_one({ find, _em});
+        const hiring_data_find = await this.findOne(find);
 
         if (!hiring_data_find) {
             throw new Error('hiring_data not found');

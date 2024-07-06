@@ -77,11 +77,9 @@ export class UserService {
 
         try {
 
-            const f_em = this.em.fork();
-            const user = await this._User_RepositoryService.find_one({
-                find: { _id },
-                _em: f_em
-            });
+            const user = await this._User_RepositoryService.findOne(
+                { _id },
+            );
 
             if (!user) {
                 throw new RpcException({
@@ -123,7 +121,7 @@ export class UserService {
         try {
 
             const f_em = this.em.fork();
-            const resp_auth = await this._User_RepositoryService.find_one({ find: { auth }, _em: f_em });
+            const resp_auth = await this._User_RepositoryService.findOne({ auth });
 
             if (resp_auth) {
                 _Response = {
@@ -135,32 +133,37 @@ export class UserService {
                 throw new RpcException(_Response)
             }
 
-            let hiring_data = await f_em.create(Hiring_Data_Ety, {
-                personal: {},
-            });
-
             let new_user = await this._User_RepositoryService.create_user({
                 save: {
-                    name,
+                    _id: uuid.v4(),
                     last_name,
+                    name,
                     auth,
                     profile: uuid.v4(),
-                    hiring_data: hiring_data
+                    hiring_data: {
+                        personal: {}
+                    } as any
                 },
                 _em: f_em
             });
+
+            f_em.flush();
 
             const new_profile = await this._ProfileService_GW.create_profile( {
                 user: new_user._id
             } );
 
+                console.log('new_profile', new_profile);
+
             new_user = await this._User_RepositoryService.update_user({
-                find: { _id: new_user._id },
+                find: new_user,
                 update: {
-                    profile: new_profile.data._id
+                    profile: new_profile.data._id,
                 },
                 _em: f_em
             });
+
+            f_em.flush();
 
             _Response = {
                 ok: true,
@@ -189,7 +192,7 @@ export class UserService {
         try {
 
             const f_em = this.em.fork();
-            const resp_user = await this._User_RepositoryService.find_one({ find: { _id }, _em: f_em });
+            const resp_user = await this._User_RepositoryService.findOne({ _id });
 
             if (!resp_user) {
                 throw new RpcException({
@@ -201,6 +204,8 @@ export class UserService {
             }
 
             const updated_user = await this._User_RepositoryService.update_user({ find: { _id }, update: updateUserDto, _em: f_em });
+
+            f_em.flush();
 
             _Response = {
                 ok: true,

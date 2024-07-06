@@ -1,6 +1,5 @@
 
 
-import { EntityManager } from '@mikro-orm/core';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { Hiring_Data_Repository } from '../entities/repository';
 
@@ -8,35 +7,35 @@ import { Hiring_Data_Repository } from '../entities/repository';
 import { _Response_I } from '@tesis-project/dev-globals/dist/core/interfaces';
 import { RpcException } from '@nestjs/microservices';
 import { ExceptionsHandler } from '../../../core/helpers';
+import { User_I_Dto } from '@tesis-project/dev-globals/dist/modules/user/dto';
 
 @Injectable()
 export class Hiring_Data_Service {
 
-
     private readonly logger = new Logger('Hiring_Data_Service');
-
     ExceptionsHandler = new ExceptionsHandler();
 
     constructor(
-        private readonly _Hiring_Data_Repository: Hiring_Data_Repository,
-        private readonly em: EntityManager,
+        private readonly _Hiring_Data_Repository: Hiring_Data_Repository
     ) {
 
     }
 
-    async get_hiring_data(_id: string) {
+    async get_hiring_data(_id: string, user_auth: User_I_Dto) {
 
         let _Response: _Response_I;
 
         try {
 
-            const f_em = this.em.fork();
-
-            const hiring = await this._Hiring_Data_Repository.find_one({
-                find: { _id },
-                options: { populate: ['user', 'payment_accounts', 'personal'] },
-                _em: f_em
-            });
+            const hiring = await this._Hiring_Data_Repository.findOne(
+                {
+                    _id,
+                    user: user_auth.user
+                },
+                {
+                    populate: ['payment_accounts', 'personal'],
+                }
+            );
 
             if (!hiring) {
                 throw new RpcException({

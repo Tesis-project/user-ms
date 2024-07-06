@@ -8,11 +8,11 @@ import { Hiring_Data_Repository, Personal_Data_Repository } from "./repository";
 @Entity({
     tableName: 'user_personal_data',
     collection: 'user_personal_data',
-        repository: () => Personal_Data_Repository,
+    repository: () => Personal_Data_Repository,
 })
 export class Personal_Data_Ety extends Schema_key {
 
-    [EntityRepositoryType]?: Hiring_Data_Repository;
+    [EntityRepositoryType]?: Personal_Data_Repository;
 
     @Property({
         type: 'varchar',
