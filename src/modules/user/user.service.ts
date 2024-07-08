@@ -153,8 +153,6 @@ export class UserService {
                 user: new_user._id
             } );
 
-                console.log('new_profile', new_profile);
-
             new_user = await this._User_RepositoryService.update_user({
                 find: new_user,
                 update: {
