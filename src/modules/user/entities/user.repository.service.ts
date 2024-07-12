@@ -63,7 +63,9 @@ export class User_Repository extends EntityRepository<User_Ety> {
             throw new Error('User not found');
         }
 
-        await _em.remove(user_find);
+        await _em.nativeDelete(User_Ety, {
+            _id: user_find._id
+        });
         return true;
 
     }

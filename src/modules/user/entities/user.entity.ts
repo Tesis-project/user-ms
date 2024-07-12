@@ -58,7 +58,6 @@ export class User_Ety extends Schema_key {
     })
     profile: any;
 
-    // @OneToOne(() => Hiring_Data_Ety, { inversedBy: 'user', orphanRemoval: true })
     @OneToOne(() => Hiring_Data_Ety, hiring => hiring.user, { mappedBy: 'user', orphanRemoval: true })
     hiring_data: Hiring_Data_Ety;
 

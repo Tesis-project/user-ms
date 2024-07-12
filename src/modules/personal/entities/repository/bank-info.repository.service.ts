@@ -65,13 +65,15 @@ export class Bank_Info_Repository extends EntityRepository<Bank_Data_Ety> {
 
     async delete_bank_info({ find,  _em}: _Process_Delete_I<Bank_Data_Ety>): Promise<boolean> {
 
-        const bank_info_find = await this.find_one({ find, _em });
+        const bank_info_find = await this.findOne(find);
 
         if (!bank_info_find) {
             throw new Error('bank_info not found');
         }
 
-        await _em.remove(bank_info_find);
+        const l = await _em.nativeDelete(Bank_Data_Ety, {
+            _id: bank_info_find._id
+        });
         return true;
 
     }

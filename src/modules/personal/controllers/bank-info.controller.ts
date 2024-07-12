@@ -21,4 +21,24 @@ export class Bank_Info_Controller {
 
     }
 
+    @MessagePattern('user.hiring_data.bank.find_all')
+    async find_all_bank_data(
+        @Payload('hiring_id', ParseUUIDPipe) hiring_id: string,
+        @Payload('user_auth') user_auth: User_I_Dto
+    ) {
+
+        return await this.Bank_Info_Service.find_all_bank_data(hiring_id, user_auth);
+
+    }
+
+    @MessagePattern('user.hiring_data.bank.delete_paymentInfo')
+    async delete_paymentInfo(
+        @Payload('bank_id', ParseUUIDPipe) bank_id: string,
+        @Payload('user_auth') user_auth: User_I_Dto
+    ) {
+
+        return await this.Bank_Info_Service.delete_paymentInfo(bank_id, user_auth);
+
+    }
+
 }

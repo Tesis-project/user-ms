@@ -69,7 +69,7 @@ export class Personal_Data_Ety extends Schema_key {
     })
     updated_at = new TempoHandler().date_now();
 
-    @OneToOne(() => Hiring_Data_Ety,  { cascade: [Cascade.ALL], orphanRemoval: true })
+    @OneToOne(() => Hiring_Data_Ety,  { cascade: [Cascade.ALL] })
     hiring_data: Hiring_Data_Ety;
 
 }
