@@ -1,5 +1,5 @@
 
-import { Cascade, Entity, EntityRepositoryType, Enum, OneToOne, Property } from "@mikro-orm/core";
+import { Cascade, Entity, EntityRepositoryType, Enum, OneToOne, Property, Rel } from "@mikro-orm/core";
 import { Schema_key } from "../../../core/entities_global";
 
 import { Gender_Enum, User_I } from "@tesis-project/dev-globals/dist/modules/user/interfaces";
@@ -59,7 +59,7 @@ export class User_Ety extends Schema_key {
     profile: any;
 
     @OneToOne(() => Hiring_Data_Ety, hiring => hiring.user, { mappedBy: 'user', orphanRemoval: true })
-    hiring_data: Hiring_Data_Ety;
+    hiring_data: Rel<Hiring_Data_Ety>;
 
     @Property({
         type: 'timestamp',

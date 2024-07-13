@@ -14,7 +14,6 @@ import { _Response_I } from '@tesis-project/dev-globals/dist/core/interfaces';
 
 import * as uuid from 'uuid';
 import { ProfileService_GW } from '../gateways/profile/profile.service';
-import { Hiring_Data_Ety } from '../personal/entities';
 
 @Injectable()
 export class UserService {

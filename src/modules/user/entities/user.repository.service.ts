@@ -26,7 +26,6 @@ export class User_Repository extends EntityRepository<User_Ety> {
 
     }
 
-
     async find_all({ find, options, _em }: _Find_Many_I<User_Ety, 'User_Ety'>, Pagination_Dto?: Pagination_Dto): Promise<Pagination_I<User_Ety>> {
 
         if (!Pagination_Dto) {

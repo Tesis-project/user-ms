@@ -1,4 +1,4 @@
-import { Cascade, Entity, EntityRepositoryType, OneToOne, Property } from "@mikro-orm/core";
+import { Cascade, Entity, EntityRepositoryType, OneToOne, Property, Rel } from "@mikro-orm/core";
 import { Schema_key } from "../../../core/entities_global";
 import { TempoHandler } from "@tesis-project/dev-globals/dist/core/classes";
 import { Hiring_Data_Ety } from "./hiring-data.entity";
@@ -69,7 +69,7 @@ export class Personal_Data_Ety extends Schema_key {
     })
     updated_at = new TempoHandler().date_now();
 
-    @OneToOne(() => Hiring_Data_Ety,  { cascade: [Cascade.ALL] })
-    hiring_data: Hiring_Data_Ety;
+    @OneToOne(() => Hiring_Data_Ety, { cascade: [Cascade.ALL] })
+    hiring_data: Rel<Hiring_Data_Ety>;
 
 }

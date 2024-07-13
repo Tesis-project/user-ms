@@ -1,5 +1,5 @@
 
-import { Cascade, Entity, EntityRepositoryType, Enum, ManyToOne, Property } from "@mikro-orm/core";
+import { Cascade, Entity, EntityRepositoryType, Enum, ManyToOne, Property, Rel } from "@mikro-orm/core";
 import { Schema_key } from "../../../core/entities_global";
 import { TempoHandler } from "@tesis-project/dev-globals/dist/core/classes";
 import { Banks_Enum, Payment_Type_Enum } from '@tesis-project/dev-globals/dist/modules/user/interfaces';
@@ -56,6 +56,6 @@ export class Bank_Data_Ety extends Schema_key {
     updated_at = new TempoHandler().date_now();
 
     @ManyToOne(() => Hiring_Data_Ety, { cascade: [Cascade.ALL] })
-    hiring_data: Hiring_Data_Ety;
+    hiring_data: Rel<Hiring_Data_Ety>;
 
 }

@@ -93,7 +93,7 @@
           "primary": false,
           "nullable": false,
           "length": 6,
-          "default": "'2024-07-03 16:46:19'",
+          "default": "'2024-07-12 06:19:40'",
           "mappedType": "datetime"
         }
       },
@@ -289,7 +289,7 @@
           "primary": false,
           "nullable": false,
           "length": 6,
-          "default": "'2024-07-03 16:46:19'",
+          "default": "'2024-07-12 06:19:40'",
           "mappedType": "datetime"
         },
         "hiring_data__id": {
@@ -430,7 +430,7 @@
           "primary": false,
           "nullable": false,
           "length": 6,
-          "default": "'2024-07-03 16:46:19'",
+          "default": "'2024-07-12 06:19:40'",
           "mappedType": "datetime"
         },
         "updated_at": {
@@ -441,7 +441,7 @@
           "primary": false,
           "nullable": false,
           "length": 6,
-          "default": "'2024-07-03 16:46:19'",
+          "default": "'2024-07-12 06:19:40'",
           "mappedType": "datetime"
         },
         "hiring_data__id": {

@@ -1,7 +1,8 @@
 import { Options } from "@mikro-orm/core";
 import { PostgreSqlDriver } from "@mikro-orm/postgresql";
 import { Migrator } from "@mikro-orm/migrations";
-import { envs } from "./src/core/config/envs";
+import { envs } from "./core/config/envs";
+
 
 const db_c = {
     dbName: envs.db_name || process.env.DB_NAME,
@@ -18,15 +19,14 @@ const config: Options = {
 
     driver: PostgreSqlDriver,
 
-    // clientUrl: dbUrl,
     clientUrl: `postgresql://${db_c.user}:${db_c.password}@${db_c.host}:${db_c.port}/${db_c.dbName}`,
 
     debug: true,
     migrations: {
-        path: 'dist/src/database/migrations',
+        path: 'dist/database/migrations',
         pathTs: './src/database/migrations',
         transactional: true,
-        tableName: '_mig_user',
+        tableName: '_mig',
         emit: 'ts',
     },
     extensions: [Migrator],
@@ -34,7 +34,3 @@ const config: Options = {
 };
 
 export default config;
-
-
-
-
