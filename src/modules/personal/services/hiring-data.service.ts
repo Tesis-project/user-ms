@@ -7,7 +7,8 @@ import { Hiring_Data_Repository } from '../entities/repository';
 import { _Response_I } from '@tesis-project/dev-globals/dist/core/interfaces';
 import { RpcException } from '@nestjs/microservices';
 import { ExceptionsHandler } from '../../../core/helpers';
-import { User_I_Dto } from '@tesis-project/dev-globals/dist/modules/user/dto';
+import { Auth_User_I_Dto } from '@tesis-project/dev-globals/dist/modules/auth/dto';
+
 
 @Injectable()
 export class Hiring_Data_Service {
@@ -21,7 +22,7 @@ export class Hiring_Data_Service {
 
     }
 
-    async get_hiring_data(_id: string, user_auth: User_I_Dto) {
+    async get_hiring_data(_id: string, user_auth: Auth_User_I_Dto) {
 
         let _Response: _Response_I;
 

@@ -4,11 +4,12 @@ import { EntityManager } from '@mikro-orm/core';
 import { Injectable, Logger } from '@nestjs/common';
 import { Bank_Info_Repository } from '../entities/repository';
 import { _Response_I } from '@tesis-project/dev-globals/dist/core/interfaces';
-import { User_I_Dto } from '@tesis-project/dev-globals/dist/modules/user/dto';
+
 
 import { Update_Bank_Data_Dto, Bank_Data_Dto } from '@tesis-project/dev-globals/dist/modules/user/dto';
 import { ExceptionsHandler } from '../../../core/helpers';
 import * as uuid from 'uuid';
+import { Auth_User_I_Dto } from '@tesis-project/dev-globals/dist/modules/auth/dto';
 
 @Injectable()
 export class Bank_Info_Service {
@@ -28,7 +29,7 @@ export class Bank_Info_Service {
 
     }
 
-    async find_and_update_bank_data(hiring_id: string, user_auth: User_I_Dto, Bank_Data_Dto: Bank_Data_Dto, _em: EntityManager) {
+    async find_and_update_bank_data(hiring_id: string, user_auth: Auth_User_I_Dto, Bank_Data_Dto: Bank_Data_Dto, _em: EntityManager) {
 
         if (Bank_Data_Dto._id) {
 
@@ -85,7 +86,7 @@ export class Bank_Info_Service {
 
     }
 
-    async find_and_delete_if_not_exist(hiring_id: string, user_auth: User_I_Dto, payment_accounts: Bank_Data_Dto[], _em: EntityManager) {
+    async find_and_delete_if_not_exist(hiring_id: string, user_auth: Auth_User_I_Dto, payment_accounts: Bank_Data_Dto[], _em: EntityManager) {
 
         const bank_data = await this._Bank_Info_Repository.find(
             {
@@ -113,7 +114,7 @@ export class Bank_Info_Service {
         }
     }
 
-    async delete_paymentInfo(bank_id: string, user_auth: User_I_Dto) {
+    async delete_paymentInfo(bank_id: string, user_auth: Auth_User_I_Dto) {
 
         let _Response: _Response_I;
 
@@ -180,7 +181,7 @@ export class Bank_Info_Service {
 
     }
 
-    async find_all_bank_data(hiring_id: string, user_auth: User_I_Dto) {
+    async find_all_bank_data(hiring_id: string, user_auth: Auth_User_I_Dto) {
 
         let _Response: _Response_I;
 
@@ -217,7 +218,7 @@ export class Bank_Info_Service {
     }
 
 
-    async save_bank_data(hiring_id: string, user_auth: User_I_Dto, Update_Bank_Data_Dto: Update_Bank_Data_Dto) {
+    async save_bank_data(hiring_id: string, user_auth: Auth_User_I_Dto, Update_Bank_Data_Dto: Update_Bank_Data_Dto) {
 
         let _Response: _Response_I;
 

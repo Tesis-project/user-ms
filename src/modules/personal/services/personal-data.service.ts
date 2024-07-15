@@ -7,7 +7,8 @@ import { _Response_I } from '@tesis-project/dev-globals/dist/core/interfaces';
 import { Personal_Data_Repository } from '../entities/repository';
 import { ExceptionsHandler } from '../../../core/helpers';
 import { RpcException } from '@nestjs/microservices';
-import { Update_Personal_Data_Dto, User_I_Dto } from '@tesis-project/dev-globals/dist/modules/user/dto';
+import { Update_Personal_Data_Dto } from '@tesis-project/dev-globals/dist/modules/user/dto';
+import { Auth_User_I_Dto } from '@tesis-project/dev-globals/dist/modules/auth/dto';
 
 @Injectable()
 export class Personal_Data_Service {
@@ -23,7 +24,7 @@ export class Personal_Data_Service {
 
     }
 
-    async save_personal(_hiring_id: string, user: User_I_Dto, personal: Update_Personal_Data_Dto) {
+    async save_personal(_hiring_id: string, user: Auth_User_I_Dto, personal: Update_Personal_Data_Dto) {
 
         let _Response: _Response_I;
 
