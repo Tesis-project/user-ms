@@ -23,6 +23,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 255,
           "mappedType": "string"
         },
         "last_name": {
@@ -32,6 +33,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 255,
           "mappedType": "string"
         },
         "gender": {
@@ -56,6 +58,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
+          "length": 255,
           "mappedType": "string"
         },
         "direction": {
@@ -74,6 +77,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 255,
           "mappedType": "string"
         },
         "profile": {
@@ -83,6 +87,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 255,
           "mappedType": "string"
         },
         "updated_at": {
@@ -93,7 +98,7 @@
           "primary": false,
           "nullable": false,
           "length": 6,
-          "default": "'2024-07-12 06:19:40'",
+          "default": "'2024-07-23 15:28:37'",
           "mappedType": "datetime"
         }
       },
@@ -218,6 +223,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
+          "length": 255,
           "default": "''",
           "mappedType": "string"
         },
@@ -228,6 +234,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
+          "length": 255,
           "default": "''",
           "mappedType": "string"
         },
@@ -238,6 +245,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
+          "length": 255,
           "default": "''",
           "mappedType": "string"
         },
@@ -248,6 +256,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
+          "length": 255,
           "default": "''",
           "mappedType": "string"
         },
@@ -258,6 +267,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
+          "length": 255,
           "default": "''",
           "mappedType": "string"
         },
@@ -268,6 +278,18 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
+          "length": 255,
+          "default": "''",
+          "mappedType": "string"
+        },
+        "specific_conditions": {
+          "name": "specific_conditions",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 255,
           "default": "''",
           "mappedType": "string"
         },
@@ -278,6 +300,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
+          "length": 255,
           "default": "''",
           "mappedType": "string"
         },
@@ -289,7 +312,7 @@
           "primary": false,
           "nullable": false,
           "length": 6,
-          "default": "'2024-07-12 06:19:40'",
+          "default": "'2024-07-23 15:28:37'",
           "mappedType": "datetime"
         },
         "hiring_data__id": {
@@ -393,6 +416,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 255,
           "mappedType": "string"
         },
         "titular": {
@@ -402,6 +426,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 255,
           "mappedType": "string"
         },
         "person_id": {
@@ -411,6 +436,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 255,
           "mappedType": "string"
         },
         "phone": {
@@ -420,6 +446,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 255,
           "mappedType": "string"
         },
         "created_at": {
@@ -430,7 +457,7 @@
           "primary": false,
           "nullable": false,
           "length": 6,
-          "default": "'2024-07-12 06:19:40'",
+          "default": "'2024-07-23 15:28:37'",
           "mappedType": "datetime"
         },
         "updated_at": {
@@ -441,7 +468,7 @@
           "primary": false,
           "nullable": false,
           "length": 6,
-          "default": "'2024-07-12 06:19:40'",
+          "default": "'2024-07-23 15:28:37'",
           "mappedType": "datetime"
         },
         "hiring_data__id": {

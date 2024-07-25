@@ -61,6 +61,13 @@ export class Personal_Data_Ety extends Schema_key {
         nullable: true,
         default: ''
     })
+    specific_conditions?: string;
+
+    @Property({
+        type: 'varchar',
+        nullable: true,
+        default: ''
+    })
     state?: string;
 
     @Property({
