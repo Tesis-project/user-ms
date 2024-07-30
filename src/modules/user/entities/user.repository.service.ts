@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User_Ety } from './user.entity';
-import { EntityManager, EntityRepository, FilterQuery } from '@mikro-orm/postgresql';
+import { EntityManager, EntityRepository } from '@mikro-orm/postgresql';
 
 import { Pagination_Dto } from '@tesis-project/dev-globals/dist/core/dto';
 
