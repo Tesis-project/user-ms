@@ -14,6 +14,10 @@ import { _Response_I } from '@tesis-project/dev-globals/dist/core/interfaces';
 
 import * as uuid from 'uuid';
 import { ProfileService_GW } from '../gateways/profile/profile.service';
+import { Profile_I } from '@tesis-project/dev-globals/dist/modules/profile/interfaces';
+import { User_Ety } from './entities/user.entity';
+import { Auth_I } from '@tesis-project/dev-globals/dist/modules/auth/interfaces';
+import { AuthService_GW } from '../gateways/auth/auth.service';
 
 @Injectable()
 export class UserService {
@@ -25,6 +29,7 @@ export class UserService {
     constructor(
         private readonly _User_RepositoryService: User_Repository,
         private readonly _ProfileService_GW: ProfileService_GW,
+        private readonly _AuthService_GW: AuthService_GW,
         private readonly em: EntityManager,
     ) {
 
@@ -70,13 +75,128 @@ export class UserService {
         return _Response;
     }
 
+
+    async set_profile( profile_id: string): Promise<_Response_I<Profile_I>> {
+
+        let _Response: _Response_I;
+
+        try {
+
+             let resp = await this._ProfileService_GW.get_profile_byId(profile_id);
+
+                const data = resp.data;
+
+                _Response = {
+                    ok: true,
+                    statusCode: HttpStatus.OK,
+                    message: 'Perfil encontrado',
+                    data: data
+                }
+
+
+        } catch (error) {
+
+            this.logger.error(`[Set profile] Error: ${error}`);
+            this.ExceptionsHandler.EmitException(error, 'UserService.set_profile');
+
+        }
+
+        return _Response;
+
+    }
+
+    async set_oneAuth( auth_id: string): Promise<_Response_I<Partial<Auth_I>>> {
+
+        let _Response: _Response_I;
+
+        try {
+
+             let resp = await this._AuthService_GW.get_authInfo_byId(auth_id);
+
+                let data = resp.data;
+
+                let aux_data: Partial<Auth_I> = {
+                    _id: data._id,
+                    email: data.email,
+                    username: data.username,
+                    role: data.role,
+                    last_session: data.last_session,
+                    status: data.status,
+                    created_at: data.created_at,
+                }
+
+                _Response = {
+                    ok: true,
+                    statusCode: HttpStatus.OK,
+                    message: 'Auth encontrado',
+                    data: {
+                        ...aux_data
+                    }
+                }
+
+
+        } catch (error) {
+
+            this.logger.error(`[Set auth] Error: ${error}`);
+            this.ExceptionsHandler.EmitException(error, 'UserService.set_oneAuth');
+
+        }
+
+        return _Response;
+
+    }
+
+    async find_oneProfile(_id: string){
+         let _Response: _Response_I;
+
+        try {
+
+            let user = await this._User_RepositoryService.findOne(
+                { _id },
+            );
+
+            if (!user) {
+                throw new RpcException({
+                    ok: false,
+                    data: null,
+                    statusCode: HttpStatus.NOT_FOUND,
+                    message: 'Usuario no encontrado'
+                })
+            }
+
+            const profile = await this.set_profile(user.profile);
+            const auth = await this.set_oneAuth(user.auth);
+
+            user = {
+                ...user,
+                profile: profile.data,
+                auth: auth.data
+            }
+
+            _Response = {
+                ok: true,
+                statusCode: HttpStatus.OK,
+                message: 'Usuario encontrado',
+                data: {
+                    ...user
+                }
+            }
+
+        } catch (error) {
+            this.logger.error(`[Find profile user by id] Error: ${error}`);
+            this.ExceptionsHandler.EmitException(error, 'UserService.find_oneProfile');
+        }
+
+        return _Response;
+    }
+
     async find_one(_id: string) {
 
         let _Response: _Response_I;
 
         try {
 
-            const user = await this._User_RepositoryService.findOne(
+            let user = await this._User_RepositoryService.findOne(
                 { _id },
             );
 
@@ -148,9 +268,9 @@ export class UserService {
 
             f_em.flush();
 
-            const new_profile = await this._ProfileService_GW.create_profile( {
+            const new_profile = await this._ProfileService_GW.create_profile({
                 user: new_user._id
-            } );
+            });
 
             new_user = await this._User_RepositoryService.update_user({
                 find: new_user,

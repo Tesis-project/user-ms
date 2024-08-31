@@ -38,6 +38,13 @@ export class UserController {
 
     }
 
+    @MessagePattern('user.get_oneProfile')
+    get_oneProfile(@Payload(ParseUUIDPipe) _id: string) {
+
+        return this.userService.find_oneProfile(_id);
+
+    }
+
     @MessagePattern('user.update')
     update(@Payload() updateUserDto: UpdateUser_Dto) {
 
