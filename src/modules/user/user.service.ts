@@ -153,6 +153,9 @@ export class UserService {
 
             let user = await this._User_RepositoryService.findOne(
                 { _id },
+                {
+                    populate: ['hiring_data', 'hiring_data.personal', 'hiring_data.payment_accounts']
+                }
             );
 
             if (!user) {
@@ -170,7 +173,10 @@ export class UserService {
             user = {
                 ...user,
                 profile: profile.data,
-                auth: auth.data
+                auth: {
+                    ...auth.data,
+                    password: '********'
+                } as Auth_I
             }
 
             _Response = {

@@ -1,7 +1,7 @@
 
 
 import { EntityManager } from '@mikro-orm/core';
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { Bank_Info_Repository } from '../entities/repository';
 import { _Response_I } from '@tesis-project/dev-globals/dist/core/interfaces';
 
@@ -10,6 +10,7 @@ import { Update_Bank_Data_Dto, Bank_Data_Dto } from '@tesis-project/dev-globals/
 import { ExceptionsHandler } from '../../../core/helpers';
 import * as uuid from 'uuid';
 import { Auth_User_I_Dto } from '@tesis-project/dev-globals/dist/modules/auth/dto';
+import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class Bank_Info_Service {
@@ -210,6 +211,48 @@ export class Bank_Info_Service {
 
             this.logger.error(`[ Find all bank data by hiring id ] Error: ${error}`);
             this.ExceptionsHandler.EmitException(error, `${this.service}.find_all_bank_data`);
+
+        }
+
+        return _Response;
+
+    }
+
+    async find_one(_id: string) {
+
+        let _Response: _Response_I;
+
+        try {
+
+            const bank_data = await this._Bank_Info_Repository.findOne(
+                {
+                    _id
+                },
+            );
+
+            if(!bank_data) {
+
+                _Response = {
+                    ok: false,
+                    data: null,
+                    statusCode: HttpStatus.NOT_FOUND,
+                    message: 'Información bancaría no encontrada'
+                }
+                throw new RpcException(_Response)
+
+            }
+
+            _Response = {
+                ok: true,
+                statusCode: 200,
+                message: 'Datos bancarios encontrados',
+                data: bank_data
+            }
+
+        } catch (error) {
+
+            this.logger.error(`[ Find bank data by id ] Error: ${error}`);
+            this.ExceptionsHandler.EmitException(error, `${this.service}.find_one`);
 
         }
 

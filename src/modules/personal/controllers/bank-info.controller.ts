@@ -33,6 +33,16 @@ export class Bank_Info_Controller {
 
     }
 
+    @MessagePattern('user.hiring_data.bank.find_one')
+    async find_one(
+        @Payload('_id', ParseUUIDPipe) _id: string,
+        // @Payload('user_auth') user_auth: Auth_User_I_Dto
+    ) {
+
+        return await this.Bank_Info_Service.find_one(_id);
+
+    }
+
     @MessagePattern('user.hiring_data.bank.delete_paymentInfo')
     async delete_paymentInfo(
         @Payload('bank_id', ParseUUIDPipe) bank_id: string,
