@@ -47,9 +47,7 @@ export class UserController {
 
     @MessagePattern('user.update')
     update(@Payload() updateUserDto: UpdateUser_Dto) {
-
         return this.userService.update_user(updateUserDto._id, updateUserDto);
-
     }
 
 

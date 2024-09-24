@@ -24,6 +24,5 @@ export class Hiring_Data_Ety extends Schema_key {
 
     @OneToOne(() => User_Ety, { cascade: [Cascade.ALL] })
     user: Rel<User_Ety>;
-    // user: Rel<User_Ety>;
 
 }

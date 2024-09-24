@@ -18,9 +18,7 @@ export class Hiring_Data_Controller {
         @Payload('_id', ParseUUIDPipe) _id: string,
         @Payload('user_auth') user_auth: Auth_User_I_Dto,
     ) {
-
         return await this.Hiring_Data_Service.get_hiring_data(_id, user_auth);
-
     }
 
 

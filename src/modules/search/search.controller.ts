@@ -19,9 +19,7 @@ export class SearchController {
         @Payload('search') SearchUser_Dto: SearchUser_Dto,
         @Payload('pagination') paginationDto: Pagination_Dto
     ) {
-
         return this.searchService.findAll(SearchUser_Dto, paginationDto);
-
     }
 
     @MessagePattern('user.search.byTerm')
@@ -29,9 +27,7 @@ export class SearchController {
         @Payload('search') SearchUser_Dto: SearchUser_Dto,
         @Payload('pagination') paginationDto: Pagination_Dto
     ) {
-
         return this.searchService.findByTerm(SearchUser_Dto, paginationDto);
-
     }
 
 }

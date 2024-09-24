@@ -18,9 +18,7 @@ export class Bank_Info_Controller {
         @Payload('bank') Update_Personal_Data_Dto: Update_Bank_Data_Dto,
         @Payload('user_auth') user_auth: Auth_User_I_Dto,
     ) {
-
         return await this.Bank_Info_Service.save_bank_data(hiring_id, user_auth, Update_Personal_Data_Dto);
-
     }
 
     @MessagePattern('user.hiring_data.bank.find_all')
@@ -48,9 +46,7 @@ export class Bank_Info_Controller {
         @Payload('bank_id', ParseUUIDPipe) bank_id: string,
         @Payload('user_auth') user_auth: Auth_User_I_Dto
     ) {
-
         return await this.Bank_Info_Service.delete_paymentInfo(bank_id, user_auth);
-
     }
 
 }
