@@ -175,8 +175,6 @@ export class SearchService {
 
         const term: string = SearchUser_Dto.term || '';
 
-        console.log('term', term);
-
         try {
 
             let users = await this._User_RepositoryService.findAll();

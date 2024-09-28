@@ -76,22 +76,22 @@ export class UserService {
     }
 
 
-    async set_profile( profile_id: string): Promise<_Response_I<Profile_I>> {
+    async set_profile(profile_id: string): Promise<_Response_I<Profile_I>> {
 
         let _Response: _Response_I;
 
         try {
 
-             let resp = await this._ProfileService_GW.get_profile_byId(profile_id);
+            let resp = await this._ProfileService_GW.get_profile_byId(profile_id);
 
-                const data = resp.data;
+            const data = resp.data;
 
-                _Response = {
-                    ok: true,
-                    statusCode: HttpStatus.OK,
-                    message: 'Perfil encontrado',
-                    data: data
-                }
+            _Response = {
+                ok: true,
+                statusCode: HttpStatus.OK,
+                message: 'Perfil encontrado',
+                data: data
+            }
 
 
         } catch (error) {
@@ -105,34 +105,34 @@ export class UserService {
 
     }
 
-    async set_oneAuth( auth_id: string): Promise<_Response_I<Partial<Auth_I>>> {
+    async set_oneAuth(auth_id: string): Promise<_Response_I<Partial<Auth_I>>> {
 
         let _Response: _Response_I;
 
         try {
 
-             let resp = await this._AuthService_GW.get_authInfo_byId(auth_id);
+            let resp = await this._AuthService_GW.get_authInfo_byId(auth_id);
 
-                let data = resp.data;
+            let data = resp.data;
 
-                let aux_data: Partial<Auth_I> = {
-                    _id: data._id,
-                    email: data.email,
-                    username: data.username,
-                    role: data.role,
-                    last_session: data.last_session,
-                    status: data.status,
-                    created_at: data.created_at,
+            let aux_data: Partial<Auth_I> = {
+                _id: data._id,
+                email: data.email,
+                username: data.username,
+                role: data.role,
+                last_session: data.last_session,
+                status: data.status,
+                created_at: data.created_at,
+            }
+
+            _Response = {
+                ok: true,
+                statusCode: HttpStatus.OK,
+                message: 'Auth encontrado',
+                data: {
+                    ...aux_data
                 }
-
-                _Response = {
-                    ok: true,
-                    statusCode: HttpStatus.OK,
-                    message: 'Auth encontrado',
-                    data: {
-                        ...aux_data
-                    }
-                }
+            }
 
 
         } catch (error) {
@@ -146,8 +146,8 @@ export class UserService {
 
     }
 
-    async find_oneProfile(_id: string){
-         let _Response: _Response_I;
+    async find_oneProfile(_id: string) {
+        let _Response: _Response_I;
 
         try {
 
@@ -173,6 +173,7 @@ export class UserService {
             user = {
                 ...user,
                 profile: profile.data,
+                hiring_data: { ...user.hiring_data },
                 auth: {
                     ...auth.data,
                     password: '********'
@@ -183,9 +184,7 @@ export class UserService {
                 ok: true,
                 statusCode: HttpStatus.OK,
                 message: 'Usuario encontrado',
-                data: {
-                    ...user
-                }
+                data: user
             }
 
         } catch (error) {
